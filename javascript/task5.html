@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error-input {
+            border: 1px solid red !important;
+            background-color: #ffe6e6;
+        }
+        .btn {
+            width: 100%;
+            padding: 8px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Form Validation</h2>
+    <form id="validationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <p class="error" id="nameError"></p>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+        <p class="error" id="emailError"></p>
+
+        <label for="website">Website:</label>
+        <input type="text" id="website">
+        <p class="error" id="websiteError"></p>
+
+        <label for="message">Message:</label>
+        <textarea id="message" rows="4"></textarea>
+        <p class="error" id="messageError"></p>
+
+        <button type="button" class="btn" onclick="validateForm()">Submit</button>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+
+        // Geting input values
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let website = document.getElementById("website").value.trim();
+        let message = document.getElementById("message").value.trim();
+
+        // Error elements
+        let nameError = document.getElementById("nameError");
+        let emailError = document.getElementById("emailError");
+        let websiteError = document.getElementById("websiteError");
+        let messageError = document.getElementById("messageError");
+
+        // Reset previous errors
+        nameError.innerText = "";
+        emailError.innerText = "";
+        websiteError.innerText = "";
+        messageError.innerText = "";
+        
+        document.getElementById("name").classList.remove("error-input");
+        document.getElementById("email").classList.remove("error-input");
+        document.getElementById("website").classList.remove("error-input");
+        document.getElementById("message").classList.remove("error-input");
+
+        // Name validation
+        if (name === "") {
+            nameError.innerText = "This field is required";
+            document.getElementById("name").classList.add("error-input");
+            isValid = false;
+        }
+
+        // Email validation
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email === "") {
+            emailError.innerText = "A valid email address is required";
+            document.getElementById("email").classList.add("error-input");
+            isValid = false;
+        } else if (!emailPattern.test(email)) {
+            emailError.innerText = "Enter a valid email address";
+            document.getElementById("email").classList.add("error-input");
+            isValid = false;
+        }
+
+        // Website validation
+        let urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+        if (website === "") {
+            websiteError.innerText = "A valid URL is required";
+            document.getElementById("website").classList.add("error-input");
+            isValid = false;
+        } else if (!urlPattern.test(website)) {
+            websiteError.innerText = "Enter a valid website URL";
+            document.getElementById("website").classList.add("error-input");
+            isValid = false;
+        }
+
+        // Message validation
+        if (message === "") {
+            messageError.innerText = "This field is required";
+            document.getElementById("message").classList.add("error-input");
+            isValid = false;
+        }
+
+        // Form submission checking
+        if (isValid) {
+            alert("Form submitted successfully!");
+        }
+    }
+</script>
+
+</body>
+</html>

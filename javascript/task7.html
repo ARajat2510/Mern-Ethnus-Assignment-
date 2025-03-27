@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 7 - Moving Train</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+        }
+        img {
+            position: absolute;
+            left: 0;
+            top: 50px;
+            width: 300px;
+        }
+        .buttons {
+            margin-top: 50px;
+        }
+        button {
+            font-size: 16px;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img id="train" src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Zrece-steam_locomotive_71-023_%28O-XI%29-right_side.jpg" alt="Moving Train">
+    </div>
+
+    <h2>Click the following buttons to handle animation</h2>
+
+    <div class="buttons">
+        <button onclick="startTrain()">Start</button>
+        <button onclick="stopTrain()">Stop</button>
+    </div>
+
+    <script>
+        let train = document.getElementById("train");
+        let position = 0;
+        let speed = 5;
+        let animation;
+
+        function moveTrain() {
+            position += speed;
+            train.style.left = position + "px";
+            if (position > window.innerWidth) {
+                position = -200; // Reset to start
+            }
+            animation = requestAnimationFrame(moveTrain);
+        }
+
+        function startTrain() {
+            if (!animation) {
+                moveTrain();
+            }
+        }
+
+        function stopTrain() {
+            cancelAnimationFrame(animation);
+            animation = null;
+        }
+    </script>
+
+</body>
+</html>

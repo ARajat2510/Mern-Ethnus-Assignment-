@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            text-align: center;
+        }
+        form {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            width: 150px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            display: block;
+        }
+        .register-btn {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="color: blue;">Registration Form</h2>
+    <form onsubmit="return validateForm()">
+        
+        <div class="form-group">
+            <label>First Name:</label>
+            <input type="text" id="fname">
+            <span id="fnameError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Last Name:</label>
+            <input type="text" id="lname">
+            <span id="lnameError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" id="email">
+            <span id="emailError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="password">
+            <span id="passwordError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Re-enter Password:</label>
+            <input type="password" id="confirmPassword">
+            <span id="confirmPasswordError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="female"> Female
+            <span id="genderError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Age:</label>
+            <input type="number" id="age">
+            <span id="ageError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number:</label>
+            <input type="text" id="phone">
+            <span id="phoneError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Address:</label>
+            <textarea id="address"></textarea>
+            <span id="addressError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>State:</label>
+            <input type="text" id="state">
+            <span id="stateError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Country:</label>
+            <select id="country">
+                <option value="">Choose your country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+            </select>
+            <span id="countryError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Languages Known:</label>
+            <input type="checkbox" name="language" value="English"> English
+            <input type="checkbox" name="language" value="Kannada"> Kannada
+            <input type="checkbox" name="language" value="Hindi"> Hindi
+            <input type="checkbox" name="language" value="Telugu"> Telugu
+            <span id="languageError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Declaration:</label>
+            <input type="checkbox" id="declaration"> I declare all the given details are true
+            <span id="declarationError" class="error"></span>
+        </div>
+
+        <br>
+        <button type="submit" class="register-btn">REGISTER</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            document.querySelectorAll(".error").forEach(el => el.innerHTML = "");
+
+            let fname = document.getElementById("fname").value;
+            if (fname.trim() === "") {
+                document.getElementById("fnameError").innerHTML = "This field is required";
+                isValid = false;
+            }
+
+            let lname = document.getElementById("lname").value;
+            if (lname.trim() === "") {
+                document.getElementById("lnameError").innerHTML = "This field is required";
+                isValid = false;
+            }
+
+            let email = document.getElementById("email").value;
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!email.match(emailPattern)) {
+                document.getElementById("emailError").innerHTML = "A valid email address is required";
+                isValid = false;
+            }
+
+            let password = document.getElementById("password").value;
+            if (password.length < 6) {
+                document.getElementById("passwordError").innerHTML = "Password must be at least 6 characters";
+                isValid = false;
+            }
+
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            if (confirmPassword !== password) {
+                document.getElementById("confirmPasswordError").innerHTML = "Passwords do not match";
+                isValid = false;
+            }
+
+            let gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+                document.getElementById("genderError").innerHTML = "Please select your gender";
+                isValid = false;
+            }
+
+            let age = document.getElementById("age").value;
+            if (age === "" || age < 1) {
+                document.getElementById("ageError").innerHTML = "Enter a valid age";
+                isValid = false;
+            }
+
+            let phone = document.getElementById("phone").value;
+            let phonePattern = /^[0-9]{10}$/;
+            if (!phone.match(phonePattern)) {
+                document.getElementById("phoneError").innerHTML = "Enter a valid 10-digit phone number";
+                isValid = false;
+            }
+
+            let address = document.getElementById("address").value;
+            if (address.trim() === "") {
+                document.getElementById("addressError").innerHTML = "Address is required";
+                isValid = false;
+            }
+
+            let state = document.getElementById("state").value;
+            if (state.trim() === "") {
+                document.getElementById("stateError").innerHTML = "State is required";
+                isValid = false;
+            }
+
+            let country = document.getElementById("country").value;
+            if (country === "") {
+                document.getElementById("countryError").innerHTML = "Please select your country";
+                isValid = false;
+            }
+
+            let declaration = document.getElementById("declaration").checked;
+            if (!declaration) {
+                document.getElementById("declarationError").innerHTML = "You must agree to the declaration";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+
+</body>
+</html>
